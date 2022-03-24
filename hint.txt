@@ -1,0 +1,2 @@
+To install the libraries in the requirement file type the following in the console of your project:
+pip install -r requirements.txt

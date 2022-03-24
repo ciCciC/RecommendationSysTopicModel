@@ -1,0 +1,8 @@
+streamlit~=1.7.0
+jupyter
+gensim==3.8.3
+pandas
+beautifulsoup4
+numpy
+requests
+spacy
