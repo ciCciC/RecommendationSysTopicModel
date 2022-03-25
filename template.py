@@ -10,15 +10,14 @@ def select_category(category):
     st.session_state['category'] = category
 
 
-def show_episodes(df_show):
-    L = 10
+def show_episodes(df_episodes):
+    L = 10 if len(df_episodes) > 10 else len(df_episodes)
     columns = st.columns(L)
 
-    df_show['diverse'] = 0
-
     for idx in range(L):
+        df_episode = df_episodes.iloc[idx]
         with columns[idx]:
-            tile_item(df_show, f'Episode {idx + 1}')
+            tile_item(df_episode)
 
 
 def show_options(options):
@@ -28,18 +27,13 @@ def show_options(options):
             st.button(option, key=random(), on_click=select_category, args=(option,))
 
 
-def tile_item(item, global_text=None):
-    st.button('😊' if item['diverse'] == 1 else '📺', key=random(), on_click=select_show, args=(item['show_id'],))
+def tile_item(item, state=None):
+    title = f'{item["title"] if len(item["title"]) < 30 else item["title"][:30] + "..."}'
+    st.caption(title.split(',')[-1] if 'season' in title.lower() else title)
+    st.image(item['image_url'])
 
-    st.image(item['image_url'], use_column_width=True)
-    broadcast_name = f'{item["broadcast_name"]}'.upper()
-
-    if global_text is None:
-        title = f'{item["title"] if len(item["title"]) < 30 else item["title"][:30] + "..."}'
-        st.text(broadcast_name)
-        st.caption(title)
-    else:
-        st.caption(global_text)  # <-- for rendering episodes
+    uni_key = item['tv_program_id'] if state else f"{item['tv_program_id']}x{item['season']}x{item['episode_id']}"
+    st.button('▶️', key=random(), on_click=select_show, args=(uni_key,))
 
 
 def recommendations(df):
@@ -48,4 +42,4 @@ def recommendations(df):
     for idx in range(len(df)):
         item = df.iloc[idx]
         with columns[idx]:
-            tile_item(item)
+            tile_item(item, state=True)
