@@ -1,4 +1,5 @@
 import streamlit as st
+import authenticate
 
 
 class RouterController:
@@ -16,6 +17,7 @@ class RouterController:
 
     def run(self):
         # initiate function app() based on selection
+
         page = st.sidebar.selectbox(
             'Navigation',
             self.pages,
