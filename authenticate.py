@@ -18,6 +18,8 @@ def authenticate():
     # 3. create the authenticator which will create an authentication session cookie with an expiry interval
     authenticator = stauth.Authenticate(names, names, hashed_passwords, 'streamlit-auth-0', 'streamlit-auth-0-key',cookie_expiry_days=1)
     # 4. display the login form in the sidebar
+    st.caption('user name: koray')
+    st.caption('password: 123')
     name, authentication_status, username = authenticator.login('Login','sidebar')
 
     # 5. the streamlit_authenticator library keeps state of the authentication status in streamlit's st.session_state['authentication_status']
