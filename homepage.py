@@ -49,9 +49,9 @@ def app():
 
     likes = st.columns(20)
     with likes[0]:
-        st.button('👍️', key=random())
+        st.button('❤️', key=random())
     with likes[1]:
-        st.button('👎️', key=random())
+        st.button('💔', key=random())
 
     df_episodes = ''
     c3 = st.columns(4)
@@ -67,6 +67,8 @@ def app():
 
     template.show_episodes(df_episodes)
 
-    range_diversity = st.select_slider('', options=np.arange(1, 4, 1))
+    range_diversity = st.select_slider('', options=np.arange(5, 0, -1))
     st.caption(range_diversity)
+
+    st.caption("Something U HATE!")
 
