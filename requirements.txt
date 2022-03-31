@@ -9,3 +9,4 @@ spacy
 matplotlib
 sklearn
 streamlit-authenticator
+csaps
