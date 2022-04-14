@@ -67,8 +67,12 @@ def app():
 
     template.show_episodes(df_episodes)
 
-    range_diversity = st.select_slider('', options=np.arange(5, 0, -1))
-    st.caption(range_diversity)
+    st.title("Similarity - Diversity")
 
-    st.caption("Something U HATE!")
+    columns_buttons = st.columns(4)
+    for idx in range(len(columns_buttons)):
+        with columns_buttons[idx]:
+            st.button(f'asdasd {(idx + 1) * 10}%')
 
+    st.title("Something U HATE!")
+    st.title("Random user")
