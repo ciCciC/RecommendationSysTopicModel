@@ -1,29 +1,24 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import template
 import matplotlib.pyplot as plt
 
 name = 'Metrics'
 
-file_tv_programs_and_episodes = './data/tv_programs_and_episodes.csv'
+file_user_logs = 'data/users_logs.csv'
 
 
 def app():
     st.title(name)
 
-    # df_tv_programs = pd.read_csv(file_tv_programs_and_episodes)
+    user_logs = pd.read_csv(file_user_logs)
+    grouped = user_logs[['date', 'recom_type']].groupby(['date', 'recom_type']).agg(len)
+    grouped = grouped.reset_index().rename(columns={0: 'freq'})
+    date_x_recom_matrix = grouped.pivot(index='date', columns='recom_type')
+    date_x_recom_matrix.columns = ['diverse', 'hate', 'random', 'similar']
 
-    # grouped_category = df_tv_programs[df_tv_programs.is_season == 0]['category'].value_counts().sort_values()
-    # st.caption('Distribution of Categories in TV programs')
-    # st.bar_chart(grouped_category)
-    #
-    # grouped_ratings = df_tv_programs[df_tv_programs.is_season == 1]['rating'].value_counts()
-    # st.caption('Distribution of Ratings in episodes')
-    # st.bar_chart(grouped_ratings)
-
-    chart_data = pd.DataFrame(
-        np.random.randn(10, 2),
-        columns=['leftwing content', 'rightwing content'])
-
-    st.line_chart(chart_data)
+    fig, ax = plt.subplots(figsize=(7, 3))
+    ax.plot(date_x_recom_matrix)
+    ax.set_title('Click behavior over time')
+    ax.legend(date_x_recom_matrix.columns)
+    plt.xticks(rotation=45)
+    st.pyplot(fig)

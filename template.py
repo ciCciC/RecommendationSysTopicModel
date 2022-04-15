@@ -36,6 +36,21 @@ def tile_item(item, state=None):
     st.button('▶️', key=random(), on_click=select_show, args=(uni_key,))
 
 
+def tile_find(item, state=None):
+    title = f'{item["title"] if len(item["title"]) < 30 else item["title"][:30] + "..."}'
+    description = item["description"]
+
+    description = description[:int((len(description)/100) * 50)]
+    description = f'{description}...'
+
+    st.image(item['image_url'])
+    st.caption(title)
+    st.caption(description)
+
+    uni_key = item['tv_program_id'] if state else f"{item['tv_program_id']}x{item['season']}x{item['episode_id']}"
+    st.button('▶️', key=random(), on_click=select_show, args=(uni_key,))
+
+
 def recommendations(df):
     columns = st.columns(len(df))
 
@@ -43,3 +58,12 @@ def recommendations(df):
         item = df.iloc[idx]
         with columns[idx]:
             tile_item(item, state=True)
+
+
+def recommendations_content(df):
+    columns = st.columns(len(df))
+
+    for idx in range(len(df)):
+        item = df.iloc[idx]
+        with columns[idx]:
+            tile_find(item, state=True)
