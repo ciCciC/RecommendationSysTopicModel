@@ -74,5 +74,7 @@ def app():
         with columns_buttons[idx]:
             st.button(f'asdasd {(idx + 1) * 10}%')
 
+    st.title("You might also like")
+
     st.title("Something U HATE!")
     st.title("Random user")
