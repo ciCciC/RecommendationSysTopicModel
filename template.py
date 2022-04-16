@@ -5,6 +5,8 @@ from random import random
 def select_show(show_id):
     st.session_state['SHOWID'] = show_id
 
+def select_diversity(percentage):
+    st.session_state['DIVERSITY'] = int(percentage/10)
 
 def select_category(category):
     st.session_state['category'] = category
@@ -20,6 +22,14 @@ def show_episodes(df_episodes):
             tile_item(df_episode)
 
 
+def show_diversity_buttons():
+    columns_buttons = st.columns(4)
+    for idx in range(len(columns_buttons)):
+        with columns_buttons[idx]:
+            percentage = (idx + 2) * 10
+            st.button(f'{percentage}%', key=random(), on_click=select_diversity, args=(percentage,))
+
+
 def show_options(options):
     columns = st.columns(len(options))
     for idx, option in enumerate(options):
@@ -27,13 +37,24 @@ def show_options(options):
             st.button(option, key=random(), on_click=select_category, args=(option,))
 
 
-def tile_item(item, state=None):
+def tile_item(item, state=None, diverse=None):
     title = f'{item["title"] if len(item["title"]) < 30 else item["title"][:30] + "..."}'
-    st.caption(title.split(',')[-1] if 'season' in title.lower() else title)
-    st.image(item['image_url'])
+    title = title.split(',')[-1] if 'season' in title.lower() else title
 
     uni_key = item['tv_program_id'] if state else f"{item['tv_program_id']}x{item['season']}x{item['episode_id']}"
-    st.button('▶️', key=random(), on_click=select_show, args=(uni_key,))
+
+    description = item["description"]
+    description = description[:int((len(description) / 100) * 20)]
+    description = f'{description}...'
+
+    if diverse:
+        st.button('😊' if item['diverse'] == 1 else '📺', key=random(), on_click=select_show, args=(uni_key, ))
+    else:
+        st.button('▶️', key=random(), on_click=select_show, args=(uni_key, ))
+
+    st.image(item['image_url'])
+    st.markdown(f"**{title.strip()}**")
+    st.caption(description)
 
 
 def tile_find(item, state=None):
@@ -51,13 +72,13 @@ def tile_find(item, state=None):
     st.button('▶️', key=random(), on_click=select_show, args=(uni_key,))
 
 
-def recommendations(df):
+def recommendations(df, diverse=None):
     columns = st.columns(len(df))
 
     for idx in range(len(df)):
         item = df.iloc[idx]
         with columns[idx]:
-            tile_item(item, state=True)
+            tile_item(item, state=True, diverse=diverse)
 
 
 def recommendations_content(df):
