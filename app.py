@@ -1,5 +1,5 @@
 import streamlit as st
-import metricpage, homepage, authenticate
+import metricpage, homepage, authenticate, findpage
 from routercontroller import RouterController
 
 
@@ -11,5 +11,6 @@ st.set_page_config(page_title='TVNZ Recommender System', layout="wide")
 # if st.session_state['authentication_status']:
 app = RouterController()
 app.add_page(homepage.name, homepage.app)
+app.add_page(findpage.name, findpage.app)
 app.add_page(metricpage.name, metricpage.app)
 app.run()
