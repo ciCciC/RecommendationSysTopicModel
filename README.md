@@ -1,4 +1,4 @@
-# Personalization Group Assignment
+# Personalized Recommendation System
 
 A Personalized Recommendation System using a Topic Model (LDA model) along with custom algorithms. Additionally, simulation of user behavior.
 
