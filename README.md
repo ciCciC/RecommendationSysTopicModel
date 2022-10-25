@@ -23,4 +23,4 @@ Additional recommendations based on statistical data
 <br/>
 Example metrics obtained from simulated user behavior.
 <br/>
-<img src="img/plots.png" width="800">
+<img src="img/plots.png" width="600", height="400">
