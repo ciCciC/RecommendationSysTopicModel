@@ -23,7 +23,7 @@ Additional recommendations based on statistical data
 <br/>
 Search TV contents by keywords
 <br/>
-<img src="img/search_contents_by_keywords.png" width="600", height="400">
+<img src="img/search_contents_by_keywords.png" width="800">
 
 <br/>
 Example metrics obtained from simulated user behavior.
